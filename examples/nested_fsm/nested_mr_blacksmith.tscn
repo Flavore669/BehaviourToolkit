@@ -1,0 +1,304 @@
+[gd_scene load_steps=23 format=3 uid="uid://dcgl1ra6220lh"]
+
+[ext_resource type="Script" uid="uid://d4g4u8q8b7rsx" path="res://examples/fsm_character_controller/MrBlacksmith.gd" id="1_bflu6"]
+[ext_resource type="Texture2D" uid="uid://cp4n4mks4l6t4" path="res://examples/assets/actors/tiny_blacksmith.png" id="2_fpsu8"]
+[ext_resource type="Script" uid="uid://b0bqn8gtyevqu" path="res://addons/behaviour_toolkit/finite_state_machine/fsm.gd" id="3_r6iyk"]
+[ext_resource type="Script" uid="uid://b8cyip4l40jgx" path="res://examples/fsm_character_controller/states/IDLE.gd" id="4_7vpcd"]
+[ext_resource type="Script" uid="uid://cffv6g18yifit" path="res://addons/behaviour_toolkit/finite_state_machine/nested_fsm.gd" id="4_s70fg"]
+[ext_resource type="Script" uid="uid://clqh1515due6x" path="res://examples/fsm_character_controller/transitions/onStartMoving.gd" id="5_vlchv"]
+[ext_resource type="Script" uid="uid://cvjqfgfhu2yue" path="res://examples/fsm_character_controller/states/MOVING.gd" id="6_cdhgq"]
+[ext_resource type="Script" uid="uid://djobir3d8k83r" path="res://examples/fsm_character_controller/transitions/onStopMoving.gd" id="7_ijy0l"]
+[ext_resource type="Script" uid="uid://db4n8gh1ye50c" path="res://examples/fsm_character_controller/transitions/onStartSprinting.gd" id="8_v24wg"]
+[ext_resource type="Script" uid="uid://c2yda53e16fwn" path="res://examples/fsm_character_controller/states/SPRINTING.gd" id="9_uambq"]
+[ext_resource type="Script" uid="uid://beyib2ryg4dja" path="res://examples/fsm_character_controller/transitions/onStopSprinting.gd" id="10_bw01j"]
+[ext_resource type="Texture2D" uid="uid://dctkyiumq3jky" path="res://examples/nested_fsm/Assets/Sword and shield.png" id="13_7vpcd"]
+
+[sub_resource type="Animation" id="Animation_c3jgb"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Character:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Weapons/Sword:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(20, 5)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Weapons/Sword:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Weapons/Sword:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Weapons/Shelid:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 4)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Weapons/Shelid:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_7vpcd"]
+resource_name = "attack"
+length = 0.3
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Weapons/Sword:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(7, 5), Vector2(7, 5)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Weapons/Sword:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [-1.55809, -0.0184624]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Weapons/Sword:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="Animation" id="Animation_vlchv"]
+resource_name = "block"
+length = 0.3
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Weapons/Shelid:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 4)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Weapons/Shelid:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="Animation" id="Animation_n1c40"]
+resource_name = "idle"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Character:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_0xjqu"]
+resource_name = "walking"
+length = 0.5
+loop_mode = 1
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Character:rotation")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.25, 0.35),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -0.174533, 0.0, 0.174533]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_t57sx"]
+_data = {
+&"RESET": SubResource("Animation_c3jgb"),
+&"attack": SubResource("Animation_7vpcd"),
+&"block": SubResource("Animation_vlchv"),
+&"idle": SubResource("Animation_n1c40"),
+&"walking": SubResource("Animation_0xjqu")
+}
+
+[sub_resource type="Curve" id="Curve_fp4cc"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.268657, 1), 1.4, 0.0, 0, 0, Vector2(0.675373, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_42v6a"]
+curve = SubResource("Curve_fp4cc")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_yrg32"]
+particle_flag_disable_z = true
+emission_shape_scale = Vector3(2, 2, 2)
+emission_shape = 1
+emission_sphere_radius = 1.0
+gravity = Vector3(0, 0, 0)
+scale_max = 3.0
+scale_curve = SubResource("CurveTexture_42v6a")
+turbulence_enabled = true
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gq6i5"]
+radius = 3.125
+height = 11.13
+
+[node name="NESTEDMrBlacksmith" type="CharacterBody2D"]
+script = ExtResource("1_bflu6")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_t57sx")
+}
+
+[node name="ParticlesWalking" type="GPUParticles2D" parent="."]
+position = Vector2(0, 7.07)
+emitting = false
+lifetime = 0.5
+process_material = SubResource("ParticleProcessMaterial_yrg32")
+
+[node name="Character" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("2_fpsu8")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 4.735)
+rotation = -1.5708
+shape = SubResource("CapsuleShape2D_gq6i5")
+
+[node name="FSMController" type="Node" parent="." node_paths=PackedStringArray("initial_state", "actor")]
+script = ExtResource("3_r6iyk")
+initial_state = NodePath("MovementFSM")
+actor = NodePath("..")
+
+[node name="MovementFSM" type="Node" parent="FSMController" node_paths=PackedStringArray("initial_state")]
+script = ExtResource("4_s70fg")
+initial_state = NodePath("IDLE")
+metadata/_custom_type_script = "uid://cffv6g18yifit"
+
+[node name="IDLE" type="Node" parent="FSMController/MovementFSM"]
+script = ExtResource("4_7vpcd")
+
+[node name="onStartMoving" type="Node" parent="FSMController/MovementFSM/IDLE" node_paths=PackedStringArray("next_state")]
+script = ExtResource("5_vlchv")
+next_state = NodePath("../../MOVING")
+
+[node name="MOVING" type="Node" parent="FSMController/MovementFSM"]
+script = ExtResource("6_cdhgq")
+
+[node name="onStopMoving" type="Node" parent="FSMController/MovementFSM/MOVING" node_paths=PackedStringArray("next_state")]
+script = ExtResource("7_ijy0l")
+next_state = NodePath("../../IDLE")
+
+[node name="onStartSprinting" type="Node" parent="FSMController/MovementFSM/MOVING" node_paths=PackedStringArray("next_state")]
+script = ExtResource("8_v24wg")
+next_state = NodePath("../../SPRINTING")
+
+[node name="SPRINTING" type="Node" parent="FSMController/MovementFSM"]
+script = ExtResource("9_uambq")
+
+[node name="onStopSprinting" type="Node" parent="FSMController/MovementFSM/SPRINTING" node_paths=PackedStringArray("next_state")]
+script = ExtResource("10_bw01j")
+next_state = NodePath("../../MOVING")
+
+[node name="Weapons" type="Node2D" parent="."]
+
+[node name="Sword" type="Sprite2D" parent="Weapons"]
+visible = false
+texture_filter = 1
+position = Vector2(20, 5)
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("13_7vpcd")
+offset = Vector2(16, 0)
+flip_h = true
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 8.11737)
+
+[node name="Shelid" type="Sprite2D" parent="Weapons"]
+texture_filter = 1
+position = Vector2(0, 4)
+texture = ExtResource("13_7vpcd")
+flip_h = true
+region_enabled = true
+region_rect = Rect2(23, 16, 8, 8)
+
+[connection signal="state_changed" from="FSMController" to="." method="_on_fsm_controller_state_changed"]
+[connection signal="nested_state_changed" from="FSMController/MovementFSM" to="." method="_on_movement_fsm_nested_state_changed"]

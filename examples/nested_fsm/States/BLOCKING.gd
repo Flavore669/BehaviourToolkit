@@ -6,7 +6,7 @@ func _on_enter(actor, _blackboard: Blackboard):
 	# Cast actor
 	actor = actor as CharacterBody2D
 
-	actor.animation_player.play("idle")
+	actor.animation_player.play("block")
 
 
 # Executes every _process call, if the state is active.
