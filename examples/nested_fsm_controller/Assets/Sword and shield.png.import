@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dctkyiumq3jky"
-path="res://.godot/imported/Sword and shield.png-c57e132e6fad8a4a88557cfd4c8a9177.ctex"
+path="res://.godot/imported/Sword and shield.png-f61d4ac82ecd8ec8202ed6de14c4aa5e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://examples/nested_fsm/Assets/Sword and shield.png"
-dest_files=["res://.godot/imported/Sword and shield.png-c57e132e6fad8a4a88557cfd4c8a9177.ctex"]
+source_file="res://examples/nested_fsm_controller/Assets/Sword and shield.png"
+dest_files=["res://.godot/imported/Sword and shield.png-f61d4ac82ecd8ec8202ed6de14c4aa5e.ctex"]
 
 [params]
 

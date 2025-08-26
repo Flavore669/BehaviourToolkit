@@ -1,6 +1,6 @@
-[gd_scene load_steps=23 format=3 uid="uid://dcgl1ra6220lh"]
+[gd_scene load_steps=27 format=3 uid="uid://dcgl1ra6220lh"]
 
-[ext_resource type="Script" uid="uid://d4g4u8q8b7rsx" path="res://examples/fsm_character_controller/MrBlacksmith.gd" id="1_bflu6"]
+[ext_resource type="Script" uid="uid://b06wtene10wks" path="res://examples/nested_fsm_controller/NestedMrBlacksmith.gd" id="1_aurnf"]
 [ext_resource type="Texture2D" uid="uid://cp4n4mks4l6t4" path="res://examples/assets/actors/tiny_blacksmith.png" id="2_fpsu8"]
 [ext_resource type="Script" uid="uid://b0bqn8gtyevqu" path="res://addons/behaviour_toolkit/finite_state_machine/fsm.gd" id="3_r6iyk"]
 [ext_resource type="Script" uid="uid://b8cyip4l40jgx" path="res://examples/fsm_character_controller/states/IDLE.gd" id="4_7vpcd"]
@@ -11,7 +11,11 @@
 [ext_resource type="Script" uid="uid://db4n8gh1ye50c" path="res://examples/fsm_character_controller/transitions/onStartSprinting.gd" id="8_v24wg"]
 [ext_resource type="Script" uid="uid://c2yda53e16fwn" path="res://examples/fsm_character_controller/states/SPRINTING.gd" id="9_uambq"]
 [ext_resource type="Script" uid="uid://beyib2ryg4dja" path="res://examples/fsm_character_controller/transitions/onStopSprinting.gd" id="10_bw01j"]
-[ext_resource type="Texture2D" uid="uid://dctkyiumq3jky" path="res://examples/nested_fsm/Assets/Sword and shield.png" id="13_7vpcd"]
+[ext_resource type="Script" uid="uid://vhmryxkn37mr" path="res://examples/nested_fsm_controller/Transitions/onStartAction.gd" id="12_cdhgq"]
+[ext_resource type="Texture2D" uid="uid://dctkyiumq3jky" path="res://examples/nested_fsm_controller/Assets/Sword and shield.png" id="13_7vpcd"]
+[ext_resource type="Script" uid="uid://b356jcd5ffil7" path="res://examples/nested_fsm_controller/States/ATTACKING.gd" id="13_ijy0l"]
+[ext_resource type="Script" uid="uid://d4fr0ufg1dfy0" path="res://examples/nested_fsm_controller/States/BLOCKING.gd" id="14_v24wg"]
+[ext_resource type="Script" uid="uid://btncwf10wx110" path="res://examples/nested_fsm_controller/Transitions/onStopAction.gd" id="15_ijy0l"]
 
 [sub_resource type="Animation" id="Animation_c3jgb"]
 length = 0.001
@@ -85,7 +89,7 @@ tracks/5/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [true]
+"values": [false]
 }
 
 [sub_resource type="Animation" id="Animation_7vpcd"]
@@ -222,7 +226,7 @@ radius = 3.125
 height = 11.13
 
 [node name="NESTEDMrBlacksmith" type="CharacterBody2D"]
-script = ExtResource("1_bflu6")
+script = ExtResource("1_aurnf")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -279,6 +283,29 @@ script = ExtResource("9_uambq")
 script = ExtResource("10_bw01j")
 next_state = NodePath("../../MOVING")
 
+[node name="onStartAction" type="Node" parent="FSMController/MovementFSM" node_paths=PackedStringArray("next_state")]
+script = ExtResource("12_cdhgq")
+next_state = NodePath("../../ActionFSM")
+metadata/_custom_type_script = "uid://1h0braq41vwb"
+
+[node name="ActionFSM" type="Node" parent="FSMController" node_paths=PackedStringArray("initial_state")]
+script = ExtResource("4_s70fg")
+initial_state = NodePath("ATTACKING")
+metadata/_custom_type_script = "uid://cffv6g18yifit"
+
+[node name="ATTACKING" type="Node" parent="FSMController/ActionFSM"]
+script = ExtResource("13_ijy0l")
+metadata/_custom_type_script = "uid://k5p6yghm7nrm"
+
+[node name="BLOCKING" type="Node" parent="FSMController/ActionFSM"]
+script = ExtResource("14_v24wg")
+metadata/_custom_type_script = "uid://k5p6yghm7nrm"
+
+[node name="onStopAction" type="Node" parent="FSMController/ActionFSM" node_paths=PackedStringArray("next_state")]
+script = ExtResource("15_ijy0l")
+next_state = NodePath("../../MovementFSM")
+metadata/_custom_type_script = "uid://1h0braq41vwb"
+
 [node name="Weapons" type="Node2D" parent="."]
 
 [node name="Sword" type="Sprite2D" parent="Weapons"]
@@ -293,6 +320,7 @@ region_enabled = true
 region_rect = Rect2(0, 0, 32, 8.11737)
 
 [node name="Shelid" type="Sprite2D" parent="Weapons"]
+visible = false
 texture_filter = 1
 position = Vector2(0, 4)
 texture = ExtResource("13_7vpcd")
@@ -302,3 +330,4 @@ region_rect = Rect2(23, 16, 8, 8)
 
 [connection signal="state_changed" from="FSMController" to="." method="_on_fsm_controller_state_changed"]
 [connection signal="nested_state_changed" from="FSMController/MovementFSM" to="." method="_on_movement_fsm_nested_state_changed"]
+[connection signal="nested_state_changed" from="FSMController/ActionFSM" to="." method="_on_action_fsm_nested_state_changed"]

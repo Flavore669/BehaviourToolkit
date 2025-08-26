@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=4 uid="uid://ccrn4134kb2ue"]
 
 [ext_resource type="TileSet" uid="uid://dtkgrk566xb21" path="res://examples/assets/tileset.tres" id="1_10fic"]
-[ext_resource type="PackedScene" uid="uid://dcgl1ra6220lh" path="res://examples/nested_fsm/nested_mr_blacksmith.tscn" id="2_cfmr3"]
+[ext_resource type="PackedScene" uid="uid://dcgl1ra6220lh" path="res://examples/nested_fsm_controller/nested_mr_blacksmith.tscn" id="2_cfmr3"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_855cg"]
 
