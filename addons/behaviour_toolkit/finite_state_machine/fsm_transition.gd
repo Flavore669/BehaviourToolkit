@@ -54,16 +54,41 @@ func get_next_state() -> FSMState:
 
 
 func _get_configuration_warnings() -> PackedStringArray:
-	var warnings: Array = []
+	var warnings: PackedStringArray = []
 
 	var parent: Node = get_parent()
 	if not parent is FSMState:
 		warnings.append("FSMTransition should be a child of FSMState.")
-
+	
 	if not next_state:
 		warnings.append("FSMTransition has no next state.")
-
+		return warnings
+	
 	if use_event and event == "":
 		warnings.append("FSMTransition has no event set.")
-
+	
+	var fsm := _find_fsm()
+	if fsm:
+		# Get path from FSM root to each node
+		var our_path := fsm.get_path_to(get_parent()).get_concatenated_names().split("/")
+		var their_path := fsm.get_path_to(next_state).get_concatenated_names().split("/")
+		
+		var our_state := get_node_or_null(our_path[our_path.size() - 2])
+		var their_state := get_node_or_null(their_path[their_path.size() - 2])
+		
+		print("Our Path: ", our_path)
+		print("Next Path: ", their_path)
+		
+		# Compare depth by counting path segments
+		if our_path.size() != their_path.size() or our_state != their_state:
+			warnings.append("FSMTransition should not transition outside of this NestedFSM.")
+	
 	return warnings
+
+func _find_fsm() -> FiniteStateMachine:
+	var current: Node = self
+	while current:
+		if current is FiniteStateMachine:
+			return current as FiniteStateMachine
+		current = current.get_parent()
+	return null

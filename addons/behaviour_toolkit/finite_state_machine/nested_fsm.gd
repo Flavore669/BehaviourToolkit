@@ -2,7 +2,6 @@
 extends FSMState
 class_name NestedFSM
 
-#TODO: Test NESTED MR BLACKSMITH
 
 ## The signal emitted when the fsm's state changes.
 signal nested_state_changed(state: FSMState)

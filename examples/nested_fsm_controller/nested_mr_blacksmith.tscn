@@ -263,7 +263,7 @@ script = ExtResource("4_7vpcd")
 
 [node name="onStartMoving" type="Node" parent="FSMController/MovementFSM/IDLE" node_paths=PackedStringArray("next_state")]
 script = ExtResource("5_vlchv")
-next_state = NodePath("../../MOVING")
+next_state = NodePath("..")
 
 [node name="MOVING" type="Node" parent="FSMController/MovementFSM"]
 script = ExtResource("6_cdhgq")
@@ -281,7 +281,7 @@ script = ExtResource("9_uambq")
 
 [node name="onStopSprinting" type="Node" parent="FSMController/MovementFSM/SPRINTING" node_paths=PackedStringArray("next_state")]
 script = ExtResource("10_bw01j")
-next_state = NodePath("../../MOVING")
+next_state = NodePath("../../../ActionFSM")
 
 [node name="onStartAction" type="Node" parent="FSMController/MovementFSM" node_paths=PackedStringArray("next_state")]
 script = ExtResource("12_cdhgq")
