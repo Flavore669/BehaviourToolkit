@@ -69,20 +69,21 @@ func _get_configuration_warnings() -> PackedStringArray:
 	
 	var fsm := _find_fsm()
 	if fsm:
-		# Get path from FSM root to each node
-		var our_path := fsm.get_path_to(get_parent()).get_concatenated_names().split("/")
-		var their_path := fsm.get_path_to(next_state).get_concatenated_names().split("/")
-		
-		var our_state := get_node_or_null(our_path[our_path.size() - 2])
-		var their_state := get_node_or_null(their_path[their_path.size() - 2])
+		# Generate arrays of node names to compare.
+		var our_path := fsm.get_path_to(get_parent()).get_concatenated_names().split("/") # Node names from FSM to parent state
+		var their_path := fsm.get_path_to(next_state).get_concatenated_names().split("/") # Node names from FSM to next_state
 		
 		print("Our Path: ", our_path)
 		print("Next Path: ", their_path)
 		
-		# Compare depth by counting path segments
-		if our_path.size() != their_path.size() or our_state != their_state:
+		# Handle mismatch case. Where one is >=2, the other is <2
+		# This is to avoid accessesing elements that don't exist
+		if (our_path.size() >= 2) != (their_path.size() >= 2):
 			warnings.append("FSMTransition should not transition outside of this NestedFSM.")
-	
+		# Compare their sizes to check for nesting, then compare their parent states to check if they're the same using length - 2
+		elif our_path.size() != their_path.size() or our_path[-2] != their_path[-2]:
+			warnings.append("FSMTransition should not transition outside of this NestedFSM.")
+
 	return warnings
 
 func _find_fsm() -> FiniteStateMachine:

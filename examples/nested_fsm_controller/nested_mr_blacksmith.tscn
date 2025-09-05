@@ -303,7 +303,7 @@ metadata/_custom_type_script = "uid://k5p6yghm7nrm"
 
 [node name="onStopAction" type="Node" parent="FSMController/ActionFSM" node_paths=PackedStringArray("next_state")]
 script = ExtResource("15_ijy0l")
-next_state = NodePath("../../MovementFSM")
+next_state = NodePath("..")
 metadata/_custom_type_script = "uid://1h0braq41vwb"
 
 [node name="Weapons" type="Node2D" parent="."]
