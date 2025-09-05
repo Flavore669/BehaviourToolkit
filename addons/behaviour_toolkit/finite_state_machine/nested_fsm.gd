@@ -2,6 +2,11 @@
 extends FSMState
 class_name NestedFSM
 
+# TODO:
+# Make Template
+# Integrate into UI
+# Add to the documentation
+
 ## An implementation of a simple finite state machine.
 ##
 ## The Nested Finite State Machine is a state that contains a FiniteStateMachine insde
@@ -70,21 +75,35 @@ func _on_exit(_actor: Node, _blackboard: Blackboard) -> void:
 
 
 # TODO: Improve configuration warnings for Nested FSM
-# Now that NestedFSMs exist, there should be one to account for when the user selects a state from another FSM
+# Now that NestedFSMs exist, there should be one to account for when the user selects a state from another FSM as an intitial state
 
 
 # Add custom configuration warnings
 # Note: Can be deleted if you don't want to define your own warnings.
 func _get_configuration_warnings() -> PackedStringArray:
 	var warnings: Array = []
-
 	warnings.append_array(super._get_configuration_warnings())
-
+	
 	var parent: Node = get_parent()
 	if not parent is FiniteStateMachine:
 		warnings.append("NestedFSM should be a child of a FiniteStateMachine node.")
 	
 	if not initial_state:
 		warnings.append("FSM needs an initial state")
+		return warnings  # Return early if no initial state
+	
+	var fsm := _find_fsm()
+	if fsm and initial_state:
+		# check if initial_state is a descendant of this FSM
+		if not is_ancestor_of(initial_state):
+			warnings.append("Don't select initial state outside of this FSM")
 	
 	return warnings
+
+func _find_fsm() -> FiniteStateMachine:
+	var current: Node = self
+	while current:
+		if current is FiniteStateMachine:
+			return current as FiniteStateMachine
+		current = current.get_parent()
+	return null

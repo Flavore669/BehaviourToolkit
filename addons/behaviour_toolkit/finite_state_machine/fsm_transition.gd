@@ -73,8 +73,8 @@ func _get_configuration_warnings() -> PackedStringArray:
 		var our_path := fsm.get_path_to(get_parent()).get_concatenated_names().split("/") # Node names from FSM to parent state
 		var their_path := fsm.get_path_to(next_state).get_concatenated_names().split("/") # Node names from FSM to next_state
 		
-		print("Our Path: ", our_path)
-		print("Next Path: ", their_path)
+		print(name, " Our Path: ", our_path)
+		print(name, " Next Path: ", their_path)
 		
 		# Handle mismatch case. Where one is >=2, the other is <2
 		# This is to avoid accessesing elements that don't exist

@@ -206,5 +206,10 @@ func _get_configuration_warnings() -> PackedStringArray:
 	for child in children:
 		if not child is FSMState:
 			warnings.append("Node '" + child.get_name() + "' is not a FSMState.")
-
+	
+	if initial_state:
+		# check if initial_state is a descendant of this FSM
+		if not is_ancestor_of(initial_state):
+			warnings.append("Don't select initial state outside of this FSM")
+	
 	return warnings
