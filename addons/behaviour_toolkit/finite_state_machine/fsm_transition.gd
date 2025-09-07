@@ -67,6 +67,7 @@ func _get_configuration_warnings() -> PackedStringArray:
 	if use_event and event == "":
 		warnings.append("FSMTransition has no event set.")
 	
+	#HACK: Could benefit from caching fsm
 	var fsm := _find_fsm()
 	if fsm:
 		# Get paths directly
