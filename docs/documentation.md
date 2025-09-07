@@ -29,16 +29,20 @@ The node icons where designed/choosen to give you a quick overview of their purp
 	  - [Signals](#signals)
 	- [ FSMState](#-fsmstate)
 	  - [Methods](#methods-1)
-	- [ FSMTransition](#-fsmtransition)
-	  - [Properties](#properties-1)
+	- [ NestedFSM](#-nestedfsm)
+	  - [Properties](#properties-2)
 	  - [Methods](#methods-2)
+	  - [Signals](#signals-1)
+	- [ FSMTransition](#-fsmtransition)
+	  - [Properties](#properties-3)
+	  - [Methods](#methods-3)
 - [Behaviour Tree](#behaviour-tree)
   - [Usage](#usage-1)
   - [Tree Nodes](#tree-nodes)
 	- [ BTRoot](#-btroot)
-	  - [Properties](#properties-2)
+	  - [Properties](#properties-4)
 	- [ BTComposite](#-btcomposite)
-	  - [Properties](#properties-3)
+	  - [Properties](#properties-5)
 	- [ BTLeaf](#-btleaf)
 	- [ BTDecorator](#-btdecorator)
 	- [Status Enum](#status-enum)
@@ -53,6 +57,7 @@ The node icons where designed/choosen to give you a quick overview of their purp
 - [Examples](#examples)
   - [Example: Busy villagers drinking, becoming ghosts and moving to random positions](#example-busy-villagers-drinking-becoming-ghosts-and-moving-to-random-positions)
 	- [What does a villager do?](#what-does-a-villager-do)
+
 
 
 
@@ -121,11 +126,11 @@ This allows you to build **hierarchical state machines**, useful for organizing 
 
 #### Methods
 - void `_on_enter(actor: Node, blackboard: Blackboard)`  
-  Starts the nested FSM. **Override** to trigger one-shot actions or events.  
+  Starts the nested FSM. Override to trigger one-shot actions or events.  
 - void `_on_update(_delta: float, actor: Node, blackboard: Blackboard)`  
-  Per-frame logic. **Override** for lightweight checks or firing events.  
+  Per-frame logic. Override for lightweight checks or firing events.  
 - void `_on_exit(actor: Node, blackboard: Blackboard)`  
-  Stops the nested FSM. **Override** to run cleanup or exit actions.  
+  Stops the nested FSM. Override to run cleanup or exit actions.  
 
 #### Signals
 - `nested_state_changed(state: FSMState)`  
