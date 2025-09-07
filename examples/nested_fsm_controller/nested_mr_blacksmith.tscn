@@ -265,7 +265,7 @@ script = ExtResource("4_7vpcd")
 
 [node name="onStartMoving" type="Node" parent="FSMController/MovementFSM/IDLE" node_paths=PackedStringArray("next_state")]
 script = ExtResource("5_vlchv")
-next_state = NodePath("../../MOVING")
+next_state = NodePath("..")
 
 [node name="MOVING" type="Node" parent="FSMController/MovementFSM"]
 script = ExtResource("6_cdhgq")

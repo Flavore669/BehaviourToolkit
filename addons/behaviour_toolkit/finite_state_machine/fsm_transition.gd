@@ -69,25 +69,30 @@ func _get_configuration_warnings() -> PackedStringArray:
 	
 	var fsm := _find_fsm()
 	if fsm:
-		# Generate arrays of node names to compare.
-		var our_path := fsm.get_path_to(get_parent()).get_concatenated_names().split("/") # Node names from FSM to parent state
-		var their_path := fsm.get_path_to(next_state).get_concatenated_names().split("/") # Node names from FSM to next_state
-		
-		print(name, " Our Path: ", our_path)
-		print(name, " Next Path: ", their_path)
-		
-		# Handle mismatch case. Where one is >=2, the other is <2
-		# This is to avoid accessesing elements that don't exist
-		if (our_path.size() >= 2) != (their_path.size() >= 2):
+		# Get paths directly
+		var our_path := fsm.get_path_to(get_parent())
+		var their_path := fsm.get_path_to(next_state)
+			
+		# Debug prints
+		print(name, " Our Path: ", our_path.get_name_count())
+		print(name, " Next Path: ", their_path.get_name_count())
+			
+		# Compare the number of node names in the node paths
+		var our_size := our_path.get_name_count()
+		var their_size := their_path.get_name_count()
+			
+		# Check if they have different nesting levels
+		if our_size != their_size:
 			warnings.append("FSMTransition should not transition outside of this NestedFSM.")
-		# Compare their sizes to check for nesting, then compare their parent states to check if they're the same using length - 2
-		elif our_path.size() != their_path.size() or our_path[-2] != their_path[-2]:
-			warnings.append("FSMTransition should not transition outside of this NestedFSM.")
+		# Check if they're at the same level but in different branches (different immediate parents)
+		elif our_size >= 2 and their_size >= 2:
+			if our_path.get_name(our_size - 2) != their_path.get_name(their_size - 2):
+				warnings.append("FSMTransition should not transition outside of this NestedFSM.")
 
 	return warnings
 
 func _find_fsm() -> FiniteStateMachine:
-	var current: Node = self
+	var current: Node = get_parent()
 	while current:
 		if current is FiniteStateMachine:
 			return current as FiniteStateMachine
