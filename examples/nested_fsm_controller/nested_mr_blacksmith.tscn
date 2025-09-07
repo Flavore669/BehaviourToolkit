@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://dcgl1ra6220lh"]
+[gd_scene load_steps=28 format=3 uid="uid://dcgl1ra6220lh"]
 
 [ext_resource type="Script" uid="uid://b06wtene10wks" path="res://examples/nested_fsm_controller/NestedMrBlacksmith.gd" id="1_aurnf"]
 [ext_resource type="Texture2D" uid="uid://cp4n4mks4l6t4" path="res://examples/assets/actors/tiny_blacksmith.png" id="2_fpsu8"]
@@ -14,6 +14,7 @@
 [ext_resource type="Script" uid="uid://vhmryxkn37mr" path="res://examples/nested_fsm_controller/Transitions/onStartAction.gd" id="12_cdhgq"]
 [ext_resource type="Texture2D" uid="uid://dctkyiumq3jky" path="res://examples/nested_fsm_controller/Assets/Sword and shield.png" id="13_7vpcd"]
 [ext_resource type="Script" uid="uid://b356jcd5ffil7" path="res://examples/nested_fsm_controller/States/ATTACKING.gd" id="13_ijy0l"]
+[ext_resource type="Script" uid="uid://dywybb2vhvccg" path="res://examples/nested_fsm_controller/action_fsm.gd" id="13_sv7u0"]
 [ext_resource type="Script" uid="uid://d4fr0ufg1dfy0" path="res://examples/nested_fsm_controller/States/BLOCKING.gd" id="14_v24wg"]
 [ext_resource type="Script" uid="uid://btncwf10wx110" path="res://examples/nested_fsm_controller/Transitions/onStopAction.gd" id="15_ijy0l"]
 
@@ -250,6 +251,7 @@ shape = SubResource("CapsuleShape2D_gq6i5")
 
 [node name="FSMController" type="Node" parent="." node_paths=PackedStringArray("initial_state", "actor")]
 script = ExtResource("3_r6iyk")
+active = false
 initial_state = NodePath("MovementFSM")
 actor = NodePath("..")
 
@@ -263,7 +265,7 @@ script = ExtResource("4_7vpcd")
 
 [node name="onStartMoving" type="Node" parent="FSMController/MovementFSM/IDLE" node_paths=PackedStringArray("next_state")]
 script = ExtResource("5_vlchv")
-next_state = NodePath("..")
+next_state = NodePath("../../MOVING")
 
 [node name="MOVING" type="Node" parent="FSMController/MovementFSM"]
 script = ExtResource("6_cdhgq")
@@ -281,7 +283,7 @@ script = ExtResource("9_uambq")
 
 [node name="onStopSprinting" type="Node" parent="FSMController/MovementFSM/SPRINTING" node_paths=PackedStringArray("next_state")]
 script = ExtResource("10_bw01j")
-next_state = NodePath("../../../ActionFSM")
+next_state = NodePath("../../MOVING")
 
 [node name="onStartAction" type="Node" parent="FSMController/MovementFSM" node_paths=PackedStringArray("next_state")]
 script = ExtResource("12_cdhgq")
@@ -289,7 +291,7 @@ next_state = NodePath("../../ActionFSM")
 metadata/_custom_type_script = "uid://1h0braq41vwb"
 
 [node name="ActionFSM" type="Node" parent="FSMController" node_paths=PackedStringArray("initial_state")]
-script = ExtResource("4_s70fg")
+script = ExtResource("13_sv7u0")
 initial_state = NodePath("ATTACKING")
 metadata/_custom_type_script = "uid://cffv6g18yifit"
 
@@ -303,7 +305,7 @@ metadata/_custom_type_script = "uid://k5p6yghm7nrm"
 
 [node name="onStopAction" type="Node" parent="FSMController/ActionFSM" node_paths=PackedStringArray("next_state")]
 script = ExtResource("15_ijy0l")
-next_state = NodePath("..")
+next_state = NodePath("../../MovementFSM")
 metadata/_custom_type_script = "uid://1h0braq41vwb"
 
 [node name="Weapons" type="Node2D" parent="."]

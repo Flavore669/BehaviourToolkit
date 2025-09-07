@@ -164,6 +164,12 @@ layout_mode = 2
 text = "New State"
 icon = ExtResource("1_hqqj5")
 
+[node name="ButtonNestedFSM" type="Button" parent="ScrollContainer/MarginContainer/VBoxContainer/Panel/ScrollContainer/Toolbox/FiniteStateMachine"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "New NestedFSM"
+icon = ExtResource("1_hqqj5")
+
 [node name="ButtonTransition" type="Button" parent="ScrollContainer/MarginContainer/VBoxContainer/Panel/ScrollContainer/Toolbox/FiniteStateMachine"]
 unique_name_in_owner = true
 layout_mode = 2

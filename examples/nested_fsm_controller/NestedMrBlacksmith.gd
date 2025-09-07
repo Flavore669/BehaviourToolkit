@@ -28,12 +28,13 @@ func _ready():
 	state_machine.start()
 
 func _on_fsm_controller_state_changed(state: FSMState) -> void:
-	print("Base FSM: ", state.name, " ", Time.get_ticks_msec())
-
+	#print("Base FSM: ", state.name, " ", Time.get_ticks_msec())
+	pass
 
 func _on_movement_fsm_nested_state_changed(state: FSMState) -> void:
-	print("Movement FSM: ", state.name, " ", Time.get_ticks_msec())
-
+	#print("Movement FSM: ", state.name, " ", Time.get_ticks_msec())
+	pass
 
 func _on_action_fsm_nested_state_changed(state: FSMState) -> void:
-	print("Action FSM: ", state.name, " ", Time.get_ticks_msec())
+	#print("Action FSM: ", state.name, " ", Time.get_ticks_msec())
+	pass
